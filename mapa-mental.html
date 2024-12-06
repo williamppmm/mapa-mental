@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Mental - Protección de Derechos del Trabajo</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gojs/2.3.16/go.js"></script>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif; /* Ajuste de fuente */
+        }
+        #myDiagramDiv {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        img {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            width: 200px;
+            height: auto;
+            background-color: white;
+            padding: 5px;
+            border: 1px solid #ccc; /* Borde alrededor de la imagen */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra alrededor de la imagen */
+        }
+    </style>
+</head>
+<body>
+    <div id="myDiagramDiv" style="width:100%; height:100%;"></div>
+    <img src="https://i.ibb.co/ynKZchS/mapa-mental.png" alt="Mapa Mental">
+    <script>
+        const $ = go.GraphObject.make;
+        const myDiagram = $(go.Diagram, "myDiagramDiv", {
+            layout: $(go.TreeLayout, {
+                angle: 0, // Cambiar de derecha a izquierda
+                layerSpacing: 50,
+                arrangement: go.TreeLayout.ArrangementHorizontal
+            }),
+            "undoManager.isEnabled": true,
+            "toolManager.mouseWheelBehavior": go.ToolManager.WheelZoom, // Permitir zoom con la rueda del ratón
+            initialContentAlignment: go.Spot.Center, // Centrar el contenido
+            "animationManager.isEnabled": true // Animaciones suaves
+        });
+
+        // Definición mejorada del template de nodos
+        myDiagram.nodeTemplate = $(go.Node, "Auto",
+            $(go.Shape, "RoundedRectangle",
+                {
+                    strokeWidth: 2,
+                    fill: "white",
+                    stroke: "#1976d2",
+                    portId: "",
+                    cursor: "pointer"
+                },
+                new go.Binding("fill", "color")),
+            $(go.TextBlock,
+                {
+                    margin: 12,
+                    font: "bold 14px Arial",
+                    wrap: go.TextBlock.WrapFit,
+                    textAlign: "center",
+                    editable: false
+                },
+                new go.Binding("text", "key"))
+        );
+
+        // Definición mejorada del template de enlaces
+        myDiagram.linkTemplate = $(go.Link,
+            {
+                routing: go.Link.Orthogonal,
+                corner: 5
+            },
+            $(go.Shape,
+                { strokeWidth: 2, stroke: "#1976d2" })
+        );
+
+        // Modelo de datos mejorado
+        myDiagram.model = new go.TreeModel([
+            // Nodo central
+            { key: "Protección de Derechos del Trabajo", color: "#bbdefb" },
+            
+            // OIT y sus ramificaciones
+            { key: "OIT", parent: "Protección de Derechos del Trabajo", color: "#e3f2fd" },
+            { key: "Naturaleza y Alcance", parent: "OIT", color: "#f5f5f5" },
+            { key: "Organismo ONU", parent: "Naturaleza y Alcance" },
+            { key: "Estructura Tripartita", parent: "Naturaleza y Alcance" },
+            { key: "Alcance Global", parent: "Naturaleza y Alcance" },
+            
+            { key: "Acciones Preventivas", parent: "OIT", color: "#f5f5f5" },
+            { key: "Convenios Internacionales", parent: "Acciones Preventivas" },
+            { key: "Recomendaciones Técnicas", parent: "Acciones Preventivas" },
+            { key: "Asistencia Técnica", parent: "Acciones Preventivas" },
+            
+            { key: "Acciones de Control", parent: "OIT", color: "#f5f5f5" },
+            { key: "Control Periódico", parent: "Acciones de Control" },
+            { key: "Reclamaciones", parent: "Acciones de Control" },
+            { key: "Quejas Sindicales", parent: "Acciones de Control" },
+            
+            // CIDH y sus ramificaciones
+            { key: "CIDH", parent: "Protección de Derechos del Trabajo", color: "#e3f2fd" },
+            { key: "Competencias", parent: "CIDH", color: "#f5f5f5" },
+            { key: "Promoción DDHH", parent: "Competencias" },
+            { key: "Monitoreo", parent: "Competencias" },
+            { key: "Denuncias", parent: "Competencias" },
+            
+            { key: "Sistema de Peticiones", parent: "CIDH", color: "#f5f5f5" },
+            { key: "Denuncias Individuales", parent: "Sistema de Peticiones" },
+            { key: "Medidas Cautelares", parent: "Sistema de Peticiones" },
+            { key: "Soluciones Amistosas", parent: "Sistema de Peticiones" },
+            
+            // Corte Constitucional y sus ramificaciones
+            { key: "Corte Constitucional", parent: "Protección de Derechos del Trabajo", color: "#e3f2fd" },
+            { key: "Mecanismos Nacionales", parent: "Corte Constitucional", color: "#f5f5f5" },
+            { key: "Acción de Tutela", parent: "Mecanismos Nacionales" },
+            { key: "Derecho de Petición", parent: "Mecanismos Nacionales" },
+            
+            { key: "Recursos Adicionales", parent: "Corte Constitucional", color: "#f5f5f5" },
+            { key: "Organización Sindical", parent: "Recursos Adicionales" },
+            { key: "Conflicto Colectivo", parent: "Recursos Adicionales" }
+        ]);
+    </script>
+</body>
+</html>
