@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa mental violación de derechos del trabajo</title>
+    <style>
+        /* Variables globales para consistencia en todo el diseño */
+        :root {
+            --primary-color: #131313;
+            --secondary-color: #141414;
+            --bg-light: #f8f9fa;
+            --text-color: #333;
+            --border-color: #e0e0e0;
+            --shadow: 0 2px 4px rgba(0,0,0,0.1);
+            --spacing: 20px;
+            --radius: 8px;
+            --transition: all 0.3s ease;
+        }
+
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Estilos base del cuerpo del documento */
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing);
+            color: var(--text-color);
+            background-color: #fff;
+        }
+
+        /* Estilos para encabezados */
+        h1, h2, h3, h4 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        /* Tamaños de encabezados */
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.75rem; }
+        h4 { font-size: 1.5rem; }
+
+        /* Estilos para párrafos */
+        p { margin-bottom: 1rem; }
+
+        /* Estilos de la portada */
+        .cover {
+            text-align: center;
+            margin-bottom: calc(var(--spacing) * 2.5);
+            padding: calc(var(--spacing) * 2);
+            background: linear-gradient(to bottom, #fff, var(--bg-light));
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        /* Animación para imágenes en la portada */
+        .cover img {
+            margin: var(--spacing) 0;
+            transition: var(--transition);
+        }
+
+        .cover img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Secciones principales de contenido */
+        .content-section {
+            margin-bottom: calc(var(--spacing) * 2);
+        }
+
+        /* Estilos para las secciones de derechos */
+        .rights-section {
+            background-color: #fff;
+            padding: calc(var(--spacing) * 1.5);
+            border-radius: var(--radius);
+            margin-bottom: calc(var(--spacing) * 1.5);
+            border-left: 4px solid var(--primary-color);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        /* Efectos hover para secciones de derechos */
+        .rights-section:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        /* Estilos para secciones de preguntas y respuestas */
+        .qa-section {
+            margin: calc(var(--spacing) * 0.75) 0;
+            padding: var(--spacing);
+            background-color: var(--bg-light);
+            border-radius: var(--radius);
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        /* Encabezados dentro de las secciones Q&A */
+        .qa-section h3 {
+            color: var(--secondary-color);
+            margin-top: 0;
+            font-size: 1.2rem;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+
+        /* Contenedor del mapa mental */
+        #mindMapContainer {
+            width: 100%;
+            height: 800px;
+            margin: var(--spacing) 0;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        /* Estilos para la leyenda y descripción del mapa */
+        .map-legend, .map-description {
+            background-color: var(--bg-light);
+            padding: var(--spacing);
+            border-radius: var(--radius);
+            margin: var(--spacing) 0;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        /* Contenedor de conclusiones */
+        .conclusions-container {
+            background: linear-gradient(to bottom right, #fff, var(--bg-light));
+            border-radius: var(--radius);
+            padding: calc(var(--spacing) * 1.5);
+            margin: calc(var(--spacing) * 2) 0;
+            border-left: 4px solid var(--primary-color);
+            box-shadow: var(--shadow);
+        }
+
+        /* Título de las conclusiones */
+        .conclusions-title {
+            color: var(--secondary-color);
+            font-size: 2em;
+            margin-bottom: calc(var(--spacing) * 1.5);
+            text-align: center;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: var(--spacing);
+        }
+
+        /* Texto resaltado */
+        .highlight-text {
+            background-color: rgba(33, 150, 243, 0.1);
+            color: var(--secondary-color);
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: 500;
+        }
+
+        /* Estilos del pie de página */
+        footer {
+            text-align: center;
+            margin-top: calc(var(--spacing) * 2.5);
+            padding: var(--spacing);
+            background-color: var(--bg-light);
+            border-radius: var(--radius);
+            color: var(--text-color);
+        }
+
+        /* Estilos responsivos para dispositivos móviles */
+        @media (max-width: 768px) {
+            body {
+                padding: calc(var(--spacing) / 2);
+            }
+
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.75rem; }
+            h3 { font-size: 1.5rem; }
+            h4 { font-size: 1.25rem; }
+
+            .rights-section {
+                padding: var(--spacing);
+            }
+
+            #mindMapContainer {
+                height: 600px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sección de portada -->
+    <div class="cover">
+        <h1>Mapa mental violación de derechos del trabajo</h1>
+        
+        <img src="https://i.ibb.co/3TdcjGF/logo-SENA.png" alt="logo-SENA" width="150">
+        
+        <h3>Presentado por:</h3>
+        <p><strong>William Pérez Muñoz</strong></p>
+        
+        <h3>Instructor:</h3>
+        <p><strong>Diana Constanza Matallana Chaves</strong></p>
+        
+        <h2>Servicio Nacional de Aprendizaje - SENA</h2>
+        <h3>Centro de Gestión de Mercados, Logística y Tecnologías de la Información</h3>
+        <h3>Regional Distrito Capital</h3>
+        
+        <h4>Tecnología en Análisis y Desarrollo de Software</h4>
+        <h4>Ficha: 2758315.</h4>
+        <h3>2024</h3>
+    </div>
+
+    <!-- Sección de introducción -->
+    <div class="content-section">
+        <h2>Introducción</h2>
+        <p>En este trabajo se analizan los derechos humanos del trabajo, sus fundamentos históricos y los mecanismos establecidos para su protección. A través de una lluvia de ideas y un mapa mental, se exploran seis derechos laborales fundamentales: libertad sindical, trabajo digno, igualdad laboral, seguridad social, salud y seguridad ocupacional, y jornada laboral justa. Estos derechos son presentados en un marco tridimensional que incluye su definición, evolución histórica y vías de exigibilidad.</p>
+        
+        <p>El mapa mental sintetiza las funciones y mecanismos de tres sistemas clave de protección laboral: la Organización Internacional del Trabajo (OIT), la Comisión Interamericana de Derechos Humanos (CIDH) y la Corte Constitucional. Este recurso visual permite comprender las interacciones entre los organismos y sus herramientas legales, destacando la importancia del conocimiento y la utilización de estos sistemas para la defensa efectiva de los derechos de los trabajadores.</p>
+    </div>
+
+    <!-- Sección de lluvia de ideas -->
+    <div class="content-section">
+        <h2>Lluvia de ideas</h2>
+        <h1>Derechos Humanos del Trabajo: Origen, Naturaleza y Exigibilidad</h1>
+
+        <!-- Sección Libertad Sindical -->
+        <div class="rights-section">
+            <h2>Derecho a la Libertad Sindical</h2>
+            
+            <div class="qa-section">
+                <h3>¿En qué consiste?</h3>
+                <p>La libertad sindical representa el derecho fundamental de los trabajadores para organizarse colectivamente, formar sindicatos y participar en actividades sindicales sin interferencia. Este derecho incluye la capacidad de negociar colectivamente y ejercer acciones de huelga cuando sea necesario.</p>
+            </div>
+            
+            <div class="qa-section">
+                <h3>¿Cómo surgió?</h3>
+                <p>Este derecho emergió durante la Revolución Industrial del siglo XIX, cuando los trabajadores comenzaron a organizarse para luchar contra las condiciones laborales precarias. La masacre de Haymarket en 1886 y otros eventos similares impulsaron el reconocimiento internacional de este derecho, culminando con su inclusión en el Convenio 87 de la OIT en 1948.</p>
+            </div>
+            
+            <div class="qa-section">
+                <h3>¿Ante quién se puede exigir?</h3>
+                <p>La exigibilidad se puede ejercer ante:</p>
+                <ul>
+                    <li>El Ministerio del Trabajo a nivel nacional</li>
+                    <li>La Organización Internacional del Trabajo (OIT)</li>
+                    <li>Los tribunales laborales competentes</li>
+                    <li>La Corte Constitucional mediante acción de tutela</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Sección Trabajo Digno -->
+        <div class="rights-section">
+            <h2>Derecho a un Trabajo Digno y Decente</h2>
+            
+            <div class="qa-section">
+                <h3>¿En qué consiste?</h3>
+                <p>Comprende el derecho a realizar un trabajo en condiciones dignas y justas, con una remuneración adecuada, seguridad social, estabilidad laboral y un ambiente de trabajo seguro y saludable.</p>
+            </div>
+            
+            <div class="qa-section">
+                <h3>¿Cómo surgió?</h3>
+                <p>Este derecho se consolidó después de la Segunda Guerra Mundial con la Declaración Universal de los Derechos Humanos en 1948. La OIT lo fortaleció en 1999 con el concepto de "trabajo decente", que integra aspectos como la dignidad humana y el desarrollo personal.</p>
+            </div>
+            
+            <div class="qa-section">
+                <h3>¿Ante quién se puede exigir?</h3>
+                <p>Se puede exigir ante:</p>
+                <ul>
+                    <li>Inspecciones de Trabajo</li>
+                    <li>Juzgados laborales</li>
+                    <li>Defensoría del Pueblo</li>
+                    <li>Ministerio del Trabajo</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Sección Igualdad y No Discriminación -->
+        <div class="rights-section">
+            <h2>Derecho a la Igualdad y No Discriminación Laboral</h2>
+            
+            <div class="qa-section">
+                <h3>¿En qué consiste?</h3>
+                <p>Garantiza la igualdad de oportunidades y trato en el ámbito laboral, prohibiendo la discriminación por razones de género, raza, origen nacional, religión, opinión política, orientación sexual o cualquier otra condición social.</p>
+            </div>
+            
+            <div class="qa-section">
+                <h3>¿Cómo surgió?</h3>
+                <p>Este derecho se desarrolló progresivamente durante el siglo XX, especialmente después de las luchas por los derechos civiles. Los convenios de la OIT sobre igualdad de remuneración (1951) y discriminación (1958) fueron hitos fundamentales.</p>
+            </div>
+            
+            <div class="qa-section">
+                <h3>¿Ante quién se puede exigir?</h3>
+                <p>La exigibilidad se puede realizar ante:</p>
+                <ul>
+                    <li>Comisiones de igualdad en las empresas</li>
+                    <li>Ministerio del Trabajo</li>
+                    <li>Defensoría del Pueblo</li>
+                    <li>Corte Constitucional</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Sección Seguridad Social -->
+        <div class="rights-section">
+            <h2>Derecho a la Seguridad Social</h2>
+            
+            <div class="qa-section">
+                <h3>¿En qué consiste?</h3>
+                <p>Incluye la protección integral del trabajador mediante sistemas de salud, pensiones, riesgos laborales y prestaciones sociales que garanticen su bienestar y el de su familia.</p>
+            </div>
+            
+            <div class="qa-section">
+                <h3>¿Cómo surgió?</h3>
+                <p>Sus orígenes se remontan a la Alemania de Bismarck en el siglo XIX con la creación del primer sistema de seguridad social. Se consolidó internacionalmente con el Convenio 102 de la OIT en 1952 sobre seguridad social.</p>
+            </div>
+            
+            <div class="qa-section">
+                <h3>¿Ante quién se puede exigir?</h3>
+                <p>Se puede exigir ante:</p>
+                <ul>
+                    <li>Entidades administradoras de seguridad social</li>
+                    <li>Superintendencia Nacional de Salud</li>
+                    <li>Ministerio del Trabajo</li>
+                    <li>Juzgados laborales</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Sección Seguridad y Salud -->
+        <div class="rights-section">
+            <h2>Derecho a la Seguridad y Salud en el Trabajo</h2>
+            
+            <div class="qa-section">
+                <h3>¿En qué consiste?</h3>
+                <p>Garantiza condiciones de trabajo seguras y saludables, incluyendo la prevención de riesgos laborales, la provisión de equipos de protección y la formación en seguridad laboral.</p>
+            </div>
+            
+            <div class="qa-section">
+                <h3>¿Cómo surgió?</h3>
+                <p>Este derecho evolucionó con la industrialización y las luchas obreras del siglo XIX. La creación de la OIT en 1919 y sus convenios sobre seguridad y salud laboral han sido fundamentales para su desarrollo.</p>
+            </div>
+            
+            <div class="qa-section">
+                <h3>¿Ante quién se puede exigir?</h3>
+                <p>La exigibilidad se puede ejercer ante:</p>
+                <ul>
+                    <li>Comités de Seguridad y Salud en el Trabajo</li>
+                    <li>Administradoras de Riesgos Laborales</li>
+                    <li>Ministerio del Trabajo</li>
+                    <li>Inspecciones de trabajo</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Sección Jornada Laboral -->
+        <div class="rights-section">
+            <h2>Derecho a la Jornada Laboral Justa</h2>
+            
+            <div class="qa-section">
+                <h3>¿En qué consiste?</h3>
+                <p>Establece límites a la jornada de trabajo, garantiza el derecho al descanso, vacaciones remuneradas y la compensación por trabajo extra o en días festivos.</p>
+            </div>
+            
+            <div class="qa-section">
+                <h3>¿Cómo surgió?</h3>
+                <p>La lucha por la jornada de 8 horas fue uno de los primeros logros del movimiento obrero internacional. El Convenio 1 de la OIT en 1919 sobre las horas de trabajo marcó un hito histórico en su reconocimiento.</p>
+            </div>
+            
+            <div class="qa-section">
+                <h3>¿Ante quién se puede exigir?</h3>
+                <p>Se puede exigir ante:</p>
+                <ul>
+                    <li>Inspecciones de Trabajo</li>
+                    <li>Juzgados laborales</li>
+                    <li>Ministerio del Trabajo</li>
+                    <li>Procuraduría del Trabajo</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Sección del Mapa Mental -->
+    <div class="content-section">
+        <h2>Mapa Mental</h2>
+        
+        <div class="map-description">
+            <p>Este mapa mental representa la estructura y relaciones entre los diferentes sistemas de protección de los derechos laborales, mostrando la interconexión entre organismos internacionales y nacionales.</p>
+        </div>
+
+        <!-- Contenedor del mapa mental -->
+        <div id="mindMapContainer"></div>
+
+        <!-- Script de GoJS para el mapa mental -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gojs/2.3.16/go.js"></script>
+        <script>
+            // Inicialización del diagrama
+            const $ = go.GraphObject.make;
+            const myDiagram = $(go.Diagram, "mindMapContainer", {
+                // Configuración del layout para un mapa mental horizontal
+                layout: $(go.TreeLayout, {
+                    angle: 0,
+                    layerSpacing: 50,
+                    arrangement: go.TreeLayout.ArrangementHorizontal
+                }),
+                // Habilitar el administrador de deshacer
+                "undoManager.isEnabled": true,
+                // Permitir zoom y paneo
+                "toolManager.mouseWheelBehavior": go.ToolManager.WheelZoom,
+                // Centrar el contenido
+                initialContentAlignment: go.Spot.Center,
+                // Animaciones suaves
+                "animationManager.isEnabled": true
+            });
+
+            // Plantilla para los nodos
+            myDiagram.nodeTemplate = $(go.Node, "Auto",
+                {
+                    // Efectos al pasar el mouse
+                    mouseEnter: function(e, node) { node.findObject("SHAPE").stroke = "#2196F3"; },
+                    mouseLeave: function(e, node) { node.findObject("SHAPE").stroke = "#1976d2"; }
+                },
+                $(go.Shape, "RoundedRectangle",
+                    {
+                        name: "SHAPE",
+                        strokeWidth: 2,
+                        fill: "white",
+                        stroke: "#1976d2",
+                        portId: "",
+                        cursor: "pointer"
+                    },
+                    new go.Binding("fill", "color")),
+                $(go.TextBlock,
+                    {
+                        margin: 12,
+                        font: "bold 14px Arial",
+                        wrap: go.TextBlock.WrapFit,
+                        textAlign: "center",
+                        editable: false
+                    },
+                    new go.Binding("text", "key"))
+            );
+
+            // Plantilla para los enlaces
+            myDiagram.linkTemplate = $(go.Link,
+                {
+                    routing: go.Link.Orthogonal,
+                    corner: 5,
+                    curve: go.Link.JumpOver
+                },
+                $(go.Shape,
+                    { strokeWidth: 2, stroke: "#1976d2" }),
+                // Añadir una sombra sutil a los enlaces
+                {
+                    shadowOffset: new go.Point(3, 3),
+                    shadowBlur: 5,
+                    shadowColor: "rgba(0, 0, 0, 0.2)"
+                }
+            );
+
+            // Datos del modelo
+            myDiagram.model = new go.TreeModel([
+                // Nodo central
+                { key: "Protección de Derechos del Trabajo", color: "#bbdefb" },
+                
+                // Rama OIT
+                { key: "OIT", parent: "Protección de Derechos del Trabajo", color: "#e3f2fd" },
+                { key: "Naturaleza y Alcance", parent: "OIT", color: "#f5f5f5" },
+                { key: "Organismo ONU", parent: "Naturaleza y Alcance" },
+                { key: "Estructura Tripartita", parent: "Naturaleza y Alcance" },
+                { key: "Alcance Global", parent: "Naturaleza y Alcance" },
+                
+                // Acciones Preventivas OIT
+                { key: "Acciones Preventivas", parent: "OIT", color: "#f5f5f5" },
+                { key: "Convenios Internacionales", parent: "Acciones Preventivas" },
+                { key: "Recomendaciones Técnicas", parent: "Acciones Preventivas" },
+                { key: "Asistencia Técnica", parent: "Acciones Preventivas" },
+                
+                // Acciones de Control OIT
+                { key: "Acciones de Control", parent: "OIT", color: "#f5f5f5" },
+                { key: "Control Periódico", parent: "Acciones de Control" },
+                { key: "Reclamaciones", parent: "Acciones de Control" },
+                { key: "Quejas Sindicales", parent: "Acciones de Control" },
+                
+                // Rama CIDH
+                { key: "CIDH", parent: "Protección de Derechos del Trabajo", color: "#e3f2fd" },
+                { key: "Competencias", parent: "CIDH", color: "#f5f5f5" },
+                { key: "Promoción DDHH", parent: "Competencias" },
+                { key: "Monitoreo", parent: "Competencias" },
+                { key: "Denuncias", parent: "Competencias" },
+                
+                // Sistema de Peticiones CIDH
+                { key: "Sistema de Peticiones", parent: "CIDH", color: "#f5f5f5" },
+                { key: "Denuncias Individuales", parent: "Sistema de Peticiones" },
+                { key: "Medidas Cautelares", parent: "Sistema de Peticiones" },
+                { key: "Soluciones Amistosas", parent: "Sistema de Peticiones" },
+                
+                // Rama Corte Constitucional
+                { key: "Corte Constitucional", parent: "Protección de Derechos del Trabajo", color: "#e3f2fd" },
+                { key: "Mecanismos Nacionales", parent: "Corte Constitucional", color: "#f5f5f5" },
+                { key: "Acción de Tutela", parent: "Mecanismos Nacionales" },
+                { key: "Derecho de Petición", parent: "Mecanismos Nacionales" },
+                
+                // Recursos Adicionales Corte Constitucional
+                { key: "Recursos Adicionales", parent: "Corte Constitucional", color: "#f5f5f5" },
+                { key: "Organización Sindical", parent: "Recursos Adicionales" },
+                { key: "Conflicto Colectivo", parent: "Recursos Adicionales" }
+            ]);
+
+            // Ajustar el zoom inicial para que se vea todo el diagrama
+            myDiagram.zoomToFit();
+        </script>
+
+        <div class="map-legend">
+            <h3>Leyenda del Mapa Mental</h3>
+            <p>Este mapa mental ilustra la estructura jerárquica y las relaciones entre los diferentes organismos y mecanismos de protección de los derechos laborales:</p>
+            <ul>
+                <li><strong>Nodo Central (Azul Claro):</strong> Representa el tema principal de la protección de los derechos del trabajo.</li>
+                <li><strong>Organismos Principales (Azul Medio):</strong> Muestra las tres instituciones principales: OIT, CIDH y Corte Constitucional.</li>
+                <li><strong>Subcategorías (Gris Claro):</strong> Indica las diferentes áreas y competencias de cada organismo.</li>
+                <li><strong>Conexiones:</strong> Las líneas azules muestran las relaciones jerárquicas y funcionales entre los diferentes elementos.</li>
+            </ul>
+        </div>
+    </div>
+    <!-- Sección de Conclusiones -->
+    <div class="content-section">
+        <div class="conclusions-container">
+            <h2 class="conclusions-title">Conclusiones</h2>
+
+            <div class="conclusion-paragraph">
+                <p>El análisis de los derechos laborales demuestra su naturaleza interconectada y su importancia en la construcción de un entorno laboral digno y justo. La evolución histórica de estos derechos evidencia que su desarrollo ha sido fruto de luchas sociales continuas y de un entendimiento creciente de la dignidad humana. A través de este estudio, se ha podido observar cómo cada derecho fundamental representa una pieza esencial en el engranaje de la protección laboral integral.</p>
+            </div>
+
+            <div class="conclusion-paragraph">
+                <p>La representación mediante un mapa mental ha permitido identificar las funciones preventivas y reactivas de los sistemas de protección, mostrando cómo la <span class="highlight-text">OIT</span>, <span class="highlight-text">CIDH</span> y <span class="highlight-text">Corte Constitucional</span> trabajan de manera complementaria para salvaguardar los derechos laborales. Esta visualización ha sido particularmente efectiva para comprender la complejidad de las interacciones entre los diferentes niveles de protección, desde el ámbito internacional hasta el nacional. Además, instrumentos como el Derecho de Petición y la Acción de Tutela se destacan como herramientas clave a nivel nacional, proporcionando mecanismos concretos para la defensa de los derechos laborales.</p>
+            </div>
+
+            <div class="conclusion-paragraph">
+                <p>Finalmente, este estudio subraya la importancia fundamental de la educación y la difusión del conocimiento sobre los derechos laborales y sus mecanismos de protección. La comprensión profunda de estos derechos y sus vías de exigibilidad es esencial para su efectiva implementación y defensa. Solo mediante un conocimiento amplio y la activación adecuada de estos recursos es posible garantizar la promoción y el respeto de los derechos laborales fundamentales en nuestra sociedad contemporánea.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pie de página -->
+    <footer style="text-align: center; margin-top: 50px; padding: 20px; border-top: 1px solid #e0e0e0;">
+        <p>© 2024 - williamppmm@hotmail.com SENA</p>
+    </footer>
+</body>
+</html>
